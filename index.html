@@ -1,131 +1,313 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteira Inteligente</title>
+    <title>Portal do Investidor e Segurança</title>
     <style>
         :root {
-            --bg-color: #0f0f13;
-            --card-bg: #1a1a24;
-            --accent-color: #7b2cbf;
-            --text-color: #ffffff;
-            --text-muted: #a0a0a0;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #10b981;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
         }
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #333;
+
+        h1 { margin: 0; font-size: 2rem; background: linear-gradient(90deg, #818cf8, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
-        .balance h2 {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .balance p {
-            margin: 10px 0 0 0;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-        /* Menu Retrátil de Configuração */
-        .settings-wrapper {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-        }
-        .settings-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 20px;
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-        .settings-menu {
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+
+        .tab-content {
             display: none;
-            position: absolute;
-            bottom: 60px;
-            right: 0;
-            background-color: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #444;
-            width: 200px;
+            padding: 2rem 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
         }
-        .settings-menu.active {
-            display: block;
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
         }
-        .settings-menu label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-        .settings-menu input {
+
+        .card:hover { transform: translateY(-5px); }
+
+        .input-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--text-sub); }
+        input, select {
             width: 100%;
-            padding: 8px;
-            background: #252538;
-            border: 1px solid #555;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(15, 23, 42, 0.6);
             color: white;
-            border-radius: 5px;
             box-sizing: border-box;
+        }
+
+        .result-container {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: 4px;
+        }
+
+        .scam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .scam-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-option:hover { background: rgba(255, 255, 255, 0.1); }
+        .quiz-option.correct { background: var(--accent); border-color: var(--accent); }
+        .quiz-option.wrong { background: #ef4444; border-color: #ef4444; }
+
+        .meter-bar {
+            height: 30px;
+            background: #334155;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease, background-color 0.5s ease;
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard">
-        <div class="card balance">
-            <h2>Saldo Total Disponível</h2>
-            <p>R$ 124.500,00</p>
+<header>
+    <h1>Portal do Conhecimento Financeiro</h1>
+</header>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('investments')">Simulador</button>
+    <button class="tab-btn" onclick="switchTab('scams')">Alertas de Golpes</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">Quiz Interativo</button>
+    <button class="tab-btn" onclick="switchTab('surprise')">Termômetro de Risco</button>
+</div>
+
+<!-- TAB 1: INVESTMENTS -->
+<div id="investments" class="tab-content active">
+    <h2>Simulador de Investimentos</h2>
+    <div class="card">
+        <div class="input-group">
+            <label for="inv-type">Tipo de Investimento:</label>
+            <select id="inv-type" onchange="calculate()">
+                <option value="cdi">Renda Fixa (CDI / 100% do CDI) - Baixo Risco</option>
+                <option value="prefixado">Tesouro Prefixado - Médio Prazo</option>
+                <option value="acoes">Fundo de Ações - Longo Prazo</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="inv-amount">Valor Inicial (R$):</label>
+            <input type="number" id="inv-amount" value="1000" oninput="calculate()">
+        </div>
+        <div class="input-group">
+            <label for="inv-years">Prazo (Anos):</label>
+            <input type="number" id="inv-years" value="2" oninput="calculate()">
+        </div>
+        <p><small>*O tempo é essencial: juros compostos multiplicam seus ganhos exponencialmente a longo prazo.</small></p>
+        <div class="result-container" id="inv-result">Calculando...</div>
+    </div>
+</div>
+
+<!-- TAB 2: SCAMS -->
+<div id="scams" class="tab-content">
+    <h2>Golpes Históricos e Atuais</h2>
+    <div class="scam-grid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=500&q=80" alt="Pirâmide Financeira" class="scam-img">
+            <h3>Esquema Ponzi / Pirâmide</h3>
+            <p>Promessas de lucro fácil insustentáveis. Pagam investidores antigos com dinheiro de novos membros.</p>
         </div>
         <div class="card">
-            <h2>Renda Fixa</h2>
-            <p>R$ 42.180,50</p>
-        </div>
-        <div class="card">
-            <h2>Renda Variável</h2>
-            <p>R$ 82.291,00</p>
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80" alt="Phishing" class="scam-img">
+            <h3>Phishing e Falso Suporte</h3>
+            <p>Mensagens falsas roubam senhas bancárias fingindo ser instituições oficiais. Sempre verifique o remetente.</p>
         </div>
     </div>
+</div>
 
-    <div class="settings-wrapper">
-        <button class="settings-btn" onclick="toggleMenu()">Configurar Timer</button>
-        <div class="settings-menu" id="settingsMenu">
-            <label for="timerInput">Novo Horário:</label>
-            <input type="time" id="timerInput" onchange="updateTimer(this.value)">
-        </div>
+<!-- TAB 3: QUIZ -->
+<div id="quiz" class="tab-content">
+    <h2>Desafio da Segurança</h2>
+    <div class="card" id="quiz-card">
+        <h3 id="question-text">Carregando pergunta...</h3>
+        <div id="options-container"></div>
     </div>
+</div>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('settingsMenu');
-            menu.classList.toggle('active');
-        }
+<!-- TAB 4: SURPRISE -->
+<div id="surprise" class="tab-content">
+    <h2>Termômetro de Risco</h2>
+    <div class="card">
+        <p>Selecione uma situação para avaliar o risco:</p>
+        <select id="risk-scenario" onchange="checkRisk()">
+            <option value="0">Escolha uma situação...</option>
+            <option value="20">Senha igual para todas as redes sociais</option>
+            <option value="60">Investimento com retorno garantido de 10% ao mês</option>
+            <option value="95">Transferência via Pix para desconhecido</option>
+            <option value="10">Uso de autenticação em duas etapas</option>
+        </select>
+        <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
+        <p id="risk-text"></p>
+    </div>
+</div>
 
-        function updateTimer(newTime) {
-            console.log("Timer atualizado para:", newTime);
-            // Aqui entra a lógica para disparar o evento no horário escolhido
-            alert("Alerta configurado para as " + newTime);
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function calculate() {
+        const type = document.getElementById('inv-type').value;
+        const amount = parseFloat(document.getElementById('inv-amount').value) || 0;
+        const years = parseFloat(document.getElementById('inv-years').value) || 0;
+        let rate = 0.11; // Base CDI approx
+
+        if (type === 'prefixado') rate = 0.12;
+        if (type === 'acoes') rate = 0.15;
+
+        const total = amount * Math.pow((1 + rate), years);
+        const profit = total - amount;
+        document.getElementById('inv-result').innerText = `Total estimado: R$ ${total.toFixed(2)} (Lucro: R$ ${profit.toFixed(2)})`;
+    }
+
+    const quizData = {
+        question: "Qual o maior sinal de alerta para um golpe financeiro?",
+        options: [
+            { text: "Exigência de Pix antecipado", correct: true },
+            { text: "Rentabilidade variável", correct: false },
+            { text: "Uso de aplicativo oficial", correct: false }
+        ]
+    };
+
+    function loadQuiz() {
+        const container = document.getElementById('options-container');
+        document.getElementById('question-text').innerText = quizData.question;
+        container.innerHTML = '';
+        quizData.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option';
+            btn.innerText = opt.text;
+            btn.onclick = () => {
+                btn.className = 'quiz-option ' + (opt.correct ? 'correct' : 'wrong');
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function checkRisk() {
+        const val = document.getElementById('risk-scenario').value;
+        const fill = document.getElementById('meter-fill');
+        const text = document.getElementById('risk-text');
+        fill.style.width = val + '%';
+        
+        if(val == 0) {
+            text.innerText = "";
+            fill.style.backgroundColor = '#334155';
+        } else if(val < 40) {
+            text.innerText = "Risco Baixo: Hábitos seguros.";
+            fill.style.backgroundColor = '#10b981';
+        } else if(val < 80) {
+            text.innerText = "Risco Médio: Atenção redobrada necessária.";
+            fill.style.backgroundColor = '#f59e0b';
+        } else {
+            text.innerText = "Risco Altíssimo: Perigo iminente de perda financeira.";
+            fill.style.backgroundColor = '#ef4444';
         }
-    </script>
+    }
+
+    calculate();
+    loadQuiz();
+</script>
 </body>
 </html>
