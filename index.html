@@ -1,1 +1,131 @@
-meu primeiro site
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira Inteligente</title>
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: #1a1a24;
+            --accent-color: #7b2cbf;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+        .balance h2 {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .balance p {
+            margin: 10px 0 0 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        /* Menu Retrátil de Configuração */
+        .settings-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        .settings-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .settings-menu {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            width: 200px;
+        }
+        .settings-menu.active {
+            display: block;
+        }
+        .settings-menu label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        .settings-menu input {
+            width: 100%;
+            padding: 8px;
+            background: #252538;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="card balance">
+            <h2>Saldo Total Disponível</h2>
+            <p>R$ 124.500,00</p>
+        </div>
+        <div class="card">
+            <h2>Renda Fixa</h2>
+            <p>R$ 42.180,50</p>
+        </div>
+        <div class="card">
+            <h2>Renda Variável</h2>
+            <p>R$ 82.291,00</p>
+        </div>
+    </div>
+
+    <div class="settings-wrapper">
+        <button class="settings-btn" onclick="toggleMenu()">Configurar Timer</button>
+        <div class="settings-menu" id="settingsMenu">
+            <label for="timerInput">Novo Horário:</label>
+            <input type="time" id="timerInput" onchange="updateTimer(this.value)">
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('settingsMenu');
+            menu.classList.toggle('active');
+        }
+
+        function updateTimer(newTime) {
+            console.log("Timer atualizado para:", newTime);
+            // Aqui entra a lógica para disparar o evento no horário escolhido
+            alert("Alerta configurado para as " + newTime);
+        }
+    </script>
+</body>
+</html>
