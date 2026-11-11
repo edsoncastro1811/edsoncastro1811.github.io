@@ -1,313 +1,912 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal do Investidor e Segurança</title>
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --accent: #10b981;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS — Meu Investimento</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;500;600;700&display=swap');
 
-        header {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+:root {
+  --bg:#070b18;
+  --panel:#10182c;
+  --cyan:#00eaff;
+  --purple:#a855f7;
+  --text:#eef7ff;
+  --muted:#9aabc5;
+  --green:#38f5a5;
+  --red:#ff5277;
+}
 
-        h1 { margin: 0; font-size: 2rem; background: linear-gradient(90deg, #818cf8, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+* { box-sizing:border-box; }
 
-        .tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
+body {
+  margin:0;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,#142b50 0,transparent 35%),
+    radial-gradient(circle at 90% 30%,#29164b 0,transparent 35%),
+    var(--bg);
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+}
 
-        .tab-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
+header {
+  padding:22px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #1e3655;
+  background:#080e1dcc;
+  position:sticky;
+  top:0;
+  z-index:5;
+  backdrop-filter:blur(12px);
+}
 
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
-        }
+.logo {
+  font-family:Orbitron,sans-serif;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-shadow:0 0 15px #00eaff88;
+}
 
-        .tab-content {
-            display: none;
-            padding: 2rem 1rem;
-            max-width: 900px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
-        }
+.status {
+  color:var(--green);
+  font-size:12px;
+  letter-spacing:1px;
+}
 
-        .tab-content.active { display: block; }
+main {
+  width:min(1150px,92%);
+  margin:35px auto;
+}
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.hero {
+  padding:45px 25px;
+  border:1px solid #24506a;
+  border-radius:22px;
+  background:linear-gradient(120deg,#10213bdb,#19132cdb);
+  box-shadow:0 0 35px #00eaff12;
+  text-align:center;
+}
 
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
-        }
+.eyebrow {
+  color:var(--cyan);
+  letter-spacing:4px;
+  font-size:11px;
+  font-weight:bold;
+}
 
-        .card:hover { transform: translateY(-5px); }
+h1 {
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(28px,5vw,48px);
+  margin:15px 0;
+}
 
-        .input-group { margin-bottom: 1rem; }
-        label { display: block; margin-bottom: 0.5rem; color: var(--text-sub); }
-        input, select {
-            width: 100%;
-            padding: 0.8rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(15, 23, 42, 0.6);
-            color: white;
-            box-sizing: border-box;
-        }
+.hero p {
+  color:var(--muted);
+  max-width:650px;
+  line-height:1.7;
+  margin:0 auto 22px;
+}
 
-        .result-container {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent);
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--accent);
-            border-radius: 4px;
-        }
+button {
+  cursor:pointer;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  background:#00eaff12;
+  border-radius:10px;
+  padding:12px 17px;
+  font-weight:700;
+  transition:.2s;
+}
 
-        .scam-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+button:hover {
+  background:var(--cyan);
+  color:#07101d;
+  box-shadow:0 0 20px #00eaff77;
+  transform:translateY(-2px);
+}
 
-        .scam-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
+button.secondary {
+  border-color:#a855f7;
+  color:#d6aaff;
+  background:#a855f718;
+}
 
-        .quiz-option {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+button.secondary:hover {
+  background:#a855f7;
+  color:white;
+}
 
-        .quiz-option:hover { background: rgba(255, 255, 255, 0.1); }
-        .quiz-option.correct { background: var(--accent); border-color: var(--accent); }
-        .quiz-option.wrong { background: #ef4444; border-color: #ef4444; }
+button:disabled {
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none;
+}
 
-        .meter-bar {
-            height: 30px;
-            background: #334155;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
+.section-title {
+  font-family:Orbitron,sans-serif;
+  letter-spacing:2px;
+  font-size:17px;
+  margin:35px 0 18px;
+}
 
-        .meter-fill {
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease, background-color 0.5s ease;
-        }
-    </style>
+.rooms {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:17px;
+}
+
+.room {
+  min-height:190px;
+  padding:22px;
+  border:1px solid #263b5d;
+  border-radius:17px;
+  background:linear-gradient(145deg,#111d34,#101326);
+  transition:.25s;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+}
+
+.room:hover {
+  border-color:var(--cyan);
+  transform:translateY(-5px);
+  box-shadow:0 0 25px #00eaff20;
+}
+
+.room .number {
+  color:var(--cyan);
+  font-family:Orbitron,sans-serif;
+  font-size:12px;
+}
+
+.room .emoji {
+  font-size:30px;
+  margin:13px 0;
+}
+
+.room h3 {
+  margin:5px 0 9px;
+  font-size:17px;
+}
+
+.room p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.room-view {
+  display:none;
+  margin-top:25px;
+  padding:25px;
+  border:1px solid #31516e;
+  border-radius:18px;
+  background:#0d1729ed;
+  animation:appear .3s ease;
+}
+
+.room-view.active { display:block; }
+
+@keyframes appear {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.room-view h2 {
+  font-family:Orbitron,sans-serif;
+  color:var(--cyan);
+  font-size:20px;
+}
+
+.room-view p,.room-view li {
+  color:#bdcbe0;
+  line-height:1.7;
+}
+
+.back {
+  margin-bottom:18px;
+}
+
+.field {
+  display:grid;
+  gap:7px;
+  margin:15px 0;
+}
+
+label {
+  color:#b9cbe1;
+  font-size:13px;
+}
+
+input,select {
+  width:100%;
+  padding:13px;
+  background:#080f20;
+  border:1px solid #354b6c;
+  border-radius:9px;
+  color:white;
+  font-size:15px;
+}
+
+.result {
+  padding:18px;
+  background:#071e28;
+  border:1px solid #00b9c8;
+  border-radius:12px;
+  margin-top:18px;
+  line-height:1.7;
+}
+
+.result strong {
+  color:var(--green);
+  font-size:23px;
+}
+
+.warning {
+  padding:14px;
+  border-left:3px solid #ffba48;
+  background:#ffba4810;
+  color:#f8d89d;
+  border-radius:6px;
+  line-height:1.6;
+  margin:15px 0;
+}
+
+.scam {
+  background:#101a2c;
+  border:1px solid #ff527755;
+  border-radius:12px;
+  padding:18px;
+  margin:15px 0;
+}
+
+.scam-message {
+  background:#1b2940;
+  border-radius:9px;
+  padding:15px;
+  line-height:1.7;
+  color:white;
+}
+
+.answer {
+  display:block;
+  width:100%;
+  text-align:left;
+  margin:9px 0;
+  border-color:#344b6b;
+  color:#e9f4ff;
+  background:#142039;
+}
+
+.answer.correct {
+  border-color:var(--green);
+  background:#123a30;
+}
+
+.answer.wrong {
+  border-color:var(--red);
+  background:#401a2a;
+}
+
+.feedback {
+  margin-top:15px;
+  padding:14px;
+  background:#16263d;
+  border-radius:10px;
+  line-height:1.6;
+}
+
+.case {
+  border:1px solid #2b4162;
+  background:#111d32;
+  border-radius:12px;
+  padding:18px;
+  margin:13px 0;
+}
+
+.case h3 { color:#d6aaff; }
+
+.alert-screen {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:#070b18f5;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.alert-screen.show { display:flex; }
+
+.alert-box {
+  width:min(500px,100%);
+  text-align:center;
+  padding:35px 20px;
+  border:2px solid var(--red);
+  border-radius:18px;
+  background:#25101e;
+  box-shadow:0 0 40px #ff527766;
+}
+
+.alert-box h2 {
+  color:var(--red);
+  font-family:Orbitron,sans-serif;
+}
+
+.alert-icon {
+  font-size:55px;
+}
+
+footer {
+  text-align:center;
+  padding:35px 15px;
+  color:#7588a4;
+  font-size:12px;
+}
+
+.small {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.quiz-progress {
+  height:7px;
+  background:#26334c;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.quiz-progress div {
+  height:100%;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  width:0%;
+  transition:.3s;
+}
+
+@media(max-width:600px) {
+  header { padding:16px 4%; }
+  .logo { font-size:17px; }
+  .hero { padding:30px 17px; }
+  .room-view { padding:18px; }
+}
+</style>
 </head>
+
 <body>
 
 <header>
-    <h1>Portal do Conhecimento Financeiro</h1>
+  <div class="logo">NEXUS</div>
+  <div class="status">● CENTRAL ATIVA</div>
 </header>
 
-<div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('investments')">Simulador</button>
-    <button class="tab-btn" onclick="switchTab('scams')">Alertas de Golpes</button>
-    <button class="tab-btn" onclick="switchTab('quiz')">Quiz Interativo</button>
-    <button class="tab-btn" onclick="switchTab('surprise')">Termômetro de Risco</button>
+<main>
+
+<section class="hero">
+  <div class="eyebrow">CENTRAL DE CONHECIMENTO // 001</div>
+  <h1>MEU INVESTIMENTO</h1>
+  <p>
+    Bem-vindo à NEXUS. Explore as salas, teste suas habilidades,
+    descubra como o dinheiro funciona e aprenda a se proteger no mundo digital.
+  </p>
+  <button onclick="document.getElementById('salas').scrollIntoView({behavior:'smooth'})">
+    ACESSAR CENTRAL
+  </button>
+</section>
+
+<h2 class="section-title" id="salas">▸ SELECIONE UMA SALA</h2>
+
+<section class="rooms">
+
+<div class="room" onclick="openRoom('investimentos')">
+  <div class="number">SALA 01</div>
+  <div class="emoji">📈</div>
+  <h3>Laboratório de investimentos</h3>
+  <p>Simule investimentos e descubra como seu dinheiro pode crescer.</p>
 </div>
 
-<!-- TAB 1: INVESTMENTS -->
-<div id="investments" class="tab-content active">
-    <h2>Simulador de Investimentos</h2>
-    <div class="card">
-        <div class="input-group">
-            <label for="inv-type">Tipo de Investimento:</label>
-            <select id="inv-type" onchange="calculate()">
-                <option value="cdi">Renda Fixa (CDI / 100% do CDI) - Baixo Risco</option>
-                <option value="prefixado">Tesouro Prefixado - Médio Prazo</option>
-                <option value="acoes">Fundo de Ações - Longo Prazo</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label for="inv-amount">Valor Inicial (R$):</label>
-            <input type="number" id="inv-amount" value="1000" oninput="calculate()">
-        </div>
-        <div class="input-group">
-            <label for="inv-years">Prazo (Anos):</label>
-            <input type="number" id="inv-years" value="2" oninput="calculate()">
-        </div>
-        <p><small>*O tempo é essencial: juros compostos multiplicam seus ganhos exponencialmente a longo prazo.</small></p>
-        <div class="result-container" id="inv-result">Calculando...</div>
-    </div>
+<div class="room" onclick="openRoom('seguranca')">
+  <div class="number">SALA 02</div>
+  <div class="emoji">🛡️</div>
+  <h3>Segurança digital</h3>
+  <p>Aprenda a proteger suas contas, senhas e informações pessoais.</p>
 </div>
 
-<!-- TAB 2: SCAMS -->
-<div id="scams" class="tab-content">
-    <h2>Golpes Históricos e Atuais</h2>
-    <div class="scam-grid">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=500&q=80" alt="Pirâmide Financeira" class="scam-img">
-            <h3>Esquema Ponzi / Pirâmide</h3>
-            <p>Promessas de lucro fácil insustentáveis. Pagam investidores antigos com dinheiro de novos membros.</p>
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=80" alt="Phishing" class="scam-img">
-            <h3>Phishing e Falso Suporte</h3>
-            <p>Mensagens falsas roubam senhas bancárias fingindo ser instituições oficiais. Sempre verifique o remetente.</p>
-        </div>
-    </div>
+<div class="room" onclick="openRoom('golpes')">
+  <div class="number">SALA 03</div>
+  <div class="emoji">🕵️</div>
+  <h3>Laboratório de golpes</h3>
+  <p>Investigue mensagens suspeitas e descubra sinais de fraude.</p>
 </div>
 
-<!-- TAB 3: QUIZ -->
-<div id="quiz" class="tab-content">
-    <h2>Desafio da Segurança</h2>
-    <div class="card" id="quiz-card">
-        <h3 id="question-text">Carregando pergunta...</h3>
-        <div id="options-container"></div>
-    </div>
+<div class="room" onclick="openRoom('investigacoes')">
+  <div class="number">SALA 04</div>
+  <div class="emoji">📂</div>
+  <h3>Arquivo de investigações</h3>
+  <p>Conheça casos reais e entenda o que aconteceu.</p>
 </div>
 
-<!-- TAB 4: SURPRISE -->
-<div id="surprise" class="tab-content">
-    <h2>Termômetro de Risco</h2>
-    <div class="card">
-        <p>Selecione uma situação para avaliar o risco:</p>
-        <select id="risk-scenario" onchange="checkRisk()">
-            <option value="0">Escolha uma situação...</option>
-            <option value="20">Senha igual para todas as redes sociais</option>
-            <option value="60">Investimento com retorno garantido de 10% ao mês</option>
-            <option value="95">Transferência via Pix para desconhecido</option>
-            <option value="10">Uso de autenticação em duas etapas</option>
-        </select>
-        <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
-        <p id="risk-text"></p>
-    </div>
+<div class="room" onclick="openRoom('treinamento')">
+  <div class="number">SALA 05</div>
+  <div class="emoji">🎯</div>
+  <h3>Centro de treinamento</h3>
+  <p>Responda perguntas e teste o que você aprendeu.</p>
 </div>
+
+<div class="room" onclick="openRoom('operacoes')">
+  <div class="number">SALA 06</div>
+  <div class="emoji">🚨</div>
+  <h3>Sala de operações</h3>
+  <p>Experimente uma demonstração de alerta da central.</p>
+</div>
+
+</section>
+
+<!-- SALA 01 -->
+<section class="room-view" id="investimentos">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>📈 LABORATÓRIO DE INVESTIMENTOS</h2>
+<p>Faça uma simulação para entender como um investimento pode crescer com o tempo.</p>
+
+<div class="warning">
+  Esta é uma simulação educativa. Os resultados são hipotéticos e não representam garantia de lucro.
+</div>
+
+<div class="field">
+<label>Quanto você começaria investindo? (R$)</label>
+<input type="number" id="initial" value="500" min="0">
+</div>
+
+<div class="field">
+<label>Quanto acrescentaria por mês? (R$)</label>
+<input type="number" id="monthly" value="100" min="0">
+</div>
+
+<div class="field">
+<label>Por quantos anos?</label>
+<input type="number" id="years" value="5" min="1" max="50">
+</div>
+
+<div class="field">
+<label>Taxa anual hipotética (%)</label>
+<input type="number" id="rate" value="8" min="0" max="100">
+</div>
+
+<button onclick="simulate()">CALCULAR SIMULAÇÃO</button>
+<div id="investmentResult"></div>
+</section>
+
+<!-- SALA 02 -->
+<section class="room-view" id="seguranca">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>🛡️ SEGURANÇA DIGITAL</h2>
+<p>Imagine que você recebeu uma mensagem suspeita. O que deve fazer?</p>
+
+<div class="case">
+<h3>Missão: proteger sua conta</h3>
+<p>Você recebe uma mensagem dizendo que sua conta será bloqueada em 10 minutos, a menos que clique em um link e informe sua senha.</p>
+<button onclick="securityAnswer('a')">A) Clicar no link rapidamente</button>
+<br><br>
+<button onclick="securityAnswer('b')">B) Não clicar e verificar pelo aplicativo ou site oficial</button>
+<br><br>
+<button onclick="securityAnswer('c')">C) Enviar minha senha para confirmar minha identidade</button>
+<div id="securityFeedback"></div>
+</div>
+
+<h3>Regras de ouro</h3>
+<ul>
+<li>Use senhas diferentes para contas importantes.</li>
+<li>Ative a autenticação em duas etapas.</li>
+<li>Não compartilhe códigos recebidos por SMS.</li>
+<li>Desconfie de mensagens com urgência exagerada.</li>
+<li>Confira o endereço do site antes de informar dados.</li>
+</ul>
+</section>
+
+<!-- SALA 03 -->
+<section class="room-view" id="golpes">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>🕵️ LABORATÓRIO DE GOLPES</h2>
+<p>Analise a mensagem abaixo e encontre os sinais de golpe.</p>
+
+<div class="scam">
+<div class="small">SIMULAÇÃO EDUCATIVA DE MENSAGEM</div>
+<div class="scam-message">
+  🚨 PARABÉNS! Você ganhou R$ 5.000!<br><br>
+  Para receber seu prêmio, clique imediatamente no link e informe seu CPF, senha bancária e código de confirmação.<br><br>
+  ⏰ Você tem apenas 5 minutos!
+</div>
+</div>
+
+<button onclick="document.getElementById('scamClues').style.display='block'">
+REVELAR PISTAS
+</button>
+
+<div id="scamClues" class="result" style="display:none">
+<strong>SINAIS DE ALERTA IDENTIFICADOS</strong>
+<ul>
+<li>Prêmio inesperado e bom demais para ser verdade.</li>
+<li>Pressão para agir rapidamente.</li>
+<li>Pedido de senha e código de confirmação.</li>
+<li>Solicitação de informações pessoais.</li>
+</ul>
+Nunca informe sua senha ou códigos de segurança para receber um prêmio.
+</div>
+</section>
+
+<!-- SALA 04 -->
+<section class="room-view" id="investigacoes">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>📂 ARQUIVO DE INVESTIGAÇÕES</h2>
+<p>Conheça alguns casos conhecidos envolvendo fraudes e problemas financeiros.</p>
+
+<div class="case">
+<h3>CASO 01 — Bernie Madoff</h3>
+<p>Bernie Madoff comandou um enorme esquema de fraude financeira conhecido como esquema Ponzi. Investidores recebiam pagamentos que vinham do dinheiro de novos investidores, e não de lucros reais.</p>
+<strong>LIÇÃO:</strong> Desconfie de promessas de retorno garantido e muito acima do normal.
+</div>
+
+<div class="case">
+<h3>CASO 02 — FTX</h3>
+<p>A FTX foi uma grande plataforma de negociação de criptomoedas que entrou em colapso em 2022. Seu fundador, Sam Bankman-Fried, foi condenado por crimes relacionados à fraude.</p>
+<strong>LIÇÃO:</strong> Entenda onde seu dinheiro está e pesquise a empresa antes de confiar nela.
+</div>
+
+<div class="case">
+<h3>CASO 03 — Telexfree</h3>
+<p>A Telexfree foi associada a um esquema de pirâmide financeira. O modelo dependia fortemente da entrada de participantes e de pagamentos ligados ao recrutamento.</p>
+<strong>LIÇÃO:</strong> Ganhos que dependem principalmente de trazer novas pessoas são um grande sinal de alerta.
+</div>
+</section>
+
+<!-- SALA 05 -->
+<section class="room-view" id="treinamento">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>🎯 CENTRO DE TREINAMENTO</h2>
+<p>Responda às perguntas. Você receberá uma explicação depois de cada resposta.</p>
+
+<div class="quiz-progress"><div id="progressBar"></div></div>
+<div id="quizArea"></div>
+</section>
+
+<!-- SALA 06 -->
+<section class="room-view" id="operacoes">
+<button class="back secondary" onclick="closeRooms()">← VOLTAR À CENTRAL</button>
+<h2>🚨 SALA DE OPERAÇÕES</h2>
+<p>Teste o sistema de alertas visuais da NEXUS.</p>
+
+<div class="warning">
+  Demonstração fictícia: nenhum dispositivo será acessado, nenhum dado será coletado e nenhum sistema externo será alterado.
+</div>
+
+<div class="field">
+<label>Tempo para disparar o alerta (segundos)</label>
+<input type="number" id="alertSeconds" min="1" max="60" value="5">
+</div>
+
+<button onclick="startAlert()">INICIAR CONTAGEM</button>
+<button class="secondary" onclick="triggerAlert()">DISPARAR DEMONSTRAÇÃO</button>
+<button class="secondary" onclick="cancelAlert()">CANCELAR</button>
+
+<p id="alertStatus">Sistema aguardando comando.</p>
+
+<div class="field">
+<label>
+<input type="checkbox" id="soundEnabled" style="width:auto">
+ Ativar som de alerta (opcional)
+</label>
+</div>
+</section>
+
+</main>
+
+<div class="alert-screen" id="alertScreen">
+<div class="alert-box">
+<div class="alert-icon">⚠️</div>
+<h2>ALERTA DE DEMONSTRAÇÃO</h2>
+<p>Este é apenas um teste visual da central NEXUS.</p>
+<p class="small">Nenhum sistema real foi acessado.</p>
+<button onclick="closeAlert()">FECHAR ALERTA</button>
+</div>
+</div>
+
+<footer>
+NEXUS // MEU INVESTIMENTO<br><br>
+Projeto educativo • Aprenda, investigue e proteja-se.
+</footer>
 
 <script>
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+function openRoom(id) {
+  closeRooms();
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function closeRooms() {
+  document.querySelectorAll('.room-view').forEach(room => {
+    room.classList.remove('active');
+  });
+  document.getElementById('salas').scrollIntoView({behavior:'smooth'});
+}
+
+// SIMULADOR DE INVESTIMENTOS
+function simulate() {
+  const initial = Number(document.getElementById('initial').value);
+  const monthly = Number(document.getElementById('monthly').value);
+  const years = Number(document.getElementById('years').value);
+  const rate = Number(document.getElementById('rate').value);
+
+  if ([initial,monthly,years,rate].some(n => !Number.isFinite(n) || n < 0) ||
+      years < 1 || years > 50 || rate > 100) {
+    alert('Confira os valores. O período deve ser de 1 a 50 anos e a taxa de até 100%.');
+    return;
+  }
+
+  const months = years * 12;
+  const monthlyRate = Math.pow(1 + rate / 100, 1/12) - 1;
+  let total = initial;
+
+  for(let i=0; i<months; i++) {
+    total = total * (1 + monthlyRate) + monthly;
+  }
+
+  const invested = initial + monthly * months;
+  const gain = total - invested;
+  const money = value => value.toLocaleString('pt-BR',{
+    style:'currency',currency:'BRL'
+  });
+
+  document.getElementById('investmentResult').innerHTML = `
+    <div class="result">
+      <div>VALOR FINAL SIMULADO</div>
+      <strong>${money(total)}</strong>
+      <p>Total colocado por você: ${money(invested)}</p>
+      <p>Rendimento hipotético: ${money(gain)}</p>
+      <p>Período: ${years} ano(s)</p>
+    </div>
+  `;
+}
+
+// SEGURANÇA DIGITAL
+function securityAnswer(answer) {
+  const feedback = document.getElementById('securityFeedback');
+
+  if(answer === 'b') {
+    feedback.innerHTML = '<div class="result">✅ CORRETO! Você não clicou no link e escolheu verificar pelo canal oficial. Essa é a atitude mais segura.</div>';
+  } else {
+    feedback.innerHTML = '<div class="warning">⚠️ Cuidado! Não clique em links suspeitos nem compartilhe senhas. Entre no aplicativo ou site oficial digitando o endereço você mesmo.</div>';
+  }
+}
+
+// QUIZ
+const questions = [
+  {
+    q:'O que é uma senha forte?',
+    a:['123456','Seu nome e aniversário','Uma combinação longa e difícil de adivinhar','A mesma senha em todos os sites'],
+    c:2,
+    e:'Uma senha longa, única e difícil de adivinhar ajuda a proteger suas contas.'
+  },
+  {
+    q:'O que é um investimento?',
+    a:['Guardar dinheiro ou aplicá-lo buscando um retorno futuro','Dinheiro grátis','Uma compra qualquer','Uma senha bancária'],
+    c:0,
+    e:'Investir é aplicar recursos esperando um possível retorno, sempre considerando os riscos.'
+  },
+  {
+    q:'Qual situação pode indicar um golpe?',
+    a:['Uma loja conhecida com endereço oficial','Uma promessa de lucro alto e garantido em pouco tempo','Um extrato bancário','Uma aula de educação financeira'],
+    c:1,
+    e:'Promessas de lucro alto, rápido e garantido são sinais de alerta.'
+  },
+  {
+    q:'O que é autenticação em duas etapas?',
+    a:['Usar duas contas diferentes','Ter duas senhas iguais','Uma camada extra de confirmação de identidade','Trocar de telefone'],
+    c:2,
+    e:'É uma proteção adicional que pede outra confirmação além da senha.'
+  },
+  {
+    q:'O que significa diversificar investimentos?',
+    a:['Colocar tudo em uma única opção','Distribuir o dinheiro entre diferentes tipos de investimento','Gastar todo o dinheiro','Não acompanhar suas aplicações'],
+    c:1,
+    e:'Diversificar distribui o dinheiro entre diferentes opções e pode reduzir a concentração de riscos.'
+  },
+  {
+    q:'Você recebeu um link estranho pedindo sua senha. O que faz?',
+    a:['Clica imediatamente','Envia a senha','Compartilha com amigos','Não clica e verifica pelo canal oficial'],
+    c:3,
+    e:'Nunca informe sua senha em links recebidos por mensagens.'
+  },
+  {
+    q:'O que é inflação?',
+    a:['Aumento geral dos preços ao longo do tempo','Uma senha digital','Um tipo de golpe','Um aplicativo de banco'],
+    c:0,
+    e:'A inflação representa o aumento geral dos preços e reduz o poder de compra do dinheiro.'
+  },
+  {
+    q:'Antes de investir, o que é importante fazer?',
+    a:['Seguir qualquer promessa da internet','Pedir dinheiro emprestado sem pesquisar','Pesquisar, entender os riscos e comparar opções','Investir sem saber onde está colocando o dinheiro'],
+    c:2,
+    e:'Conhecer o investimento, os riscos e as condições é essencial antes de tomar uma decisão.'
+  }
+];
+
+let questionIndex = 0;
+let score = 0;
+let answered = false;
+
+function startQuiz() {
+  questionIndex = 0;
+  score = 0;
+  answered = false;
+  showQuestion();
+}
+
+function showQuestion() {
+  const area = document.getElementById('quizArea');
+  const q = questions[questionIndex];
+
+  document.getElementById('progressBar').style.width =
+    (questionIndex / questions.length * 100) + '%';
+
+  area.innerHTML = `
+    <p class="small">PERGUNTA ${questionIndex + 1} DE ${questions.length}</p>
+    <h3>${q.q}</h3>
+    <div id="answers">
+      ${q.a.map((answer,i) =>
+        `<button class="answer" onclick="checkAnswer(${i})">${String.fromCharCode(65+i)}) ${answer}</button>`
+      ).join('')}
+    </div>
+    <div id="quizFeedback"></div>
+    <button id="nextQuestion" style="display:none;margin-top:15px" onclick="nextQuestion()">PRÓXIMA PERGUNTA →</button>
+  `;
+}
+
+function checkAnswer(choice) {
+  if(answered) return;
+  answered = true;
+
+  const q = questions[questionIndex];
+  const buttons = document.querySelectorAll('#answers button');
+
+  buttons.forEach((button,i) => {
+    button.disabled = true;
+    if(i === q.c) button.classList.add('correct');
+    if(i === choice && i !== q.c) button.classList.add('wrong');
+  });
+
+  const correct = choice === q.c;
+  if(correct) score++;
+
+  document.getElementById('quizFeedback').innerHTML = `
+    <div class="feedback">
+      <strong>${correct ? '✅ Resposta correta!' : '❌ Não foi dessa vez!'}</strong>
+      <p>${q.e}</p>
+    </div>
+  `;
+
+  document.getElementById('nextQuestion').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  questionIndex++;
+  answered = false;
+
+  if(questionIndex < questions.length) {
+    showQuestion();
+    return;
+  }
+
+  document.getElementById('progressBar').style.width = '100%';
+
+  const message = score >= 7
+    ? 'Excelente! Você está mandando muito bem!'
+    : score >= 4
+      ? 'Bom trabalho! Continue treinando.'
+      : 'Não desanime! Aprender também é errar e tentar novamente.';
+
+  document.getElementById('quizArea').innerHTML = `
+    <div class="result">
+      <h3>TREINAMENTO CONCLUÍDO</h3>
+      <strong>${score} / ${questions.length}</strong>
+      <p>${message}</p>
+      <button onclick="startQuiz()">JOGAR NOVAMENTE</button>
+    </div>
+  `;
+}
+
+document.getElementById('quizArea').innerHTML = `
+  <div class="result">
+    <h3>PRONTO PARA O DESAFIO?</h3>
+    <p>São 8 perguntas sobre investimentos e segurança digital. Não precisa ter conhecimento avançado.</p>
+    <button onclick="startQuiz()">INICIAR TREINAMENTO</button>
+  </div>
+`;
+
+// ALERTA DE DEMONSTRAÇÃO
+let alertTimer = null;
+
+function startAlert() {
+  cancelAlert();
+
+  const seconds = Number(document.getElementById('alertSeconds').value);
+
+  if(!Number.isInteger(seconds) || seconds < 1 || seconds > 60) {
+    alert('Escolha um tempo entre 1 e 60 segundos.');
+    return;
+  }
+
+  let remaining = seconds;
+  const status = document.getElementById('alertStatus');
+
+  status.textContent = 'Demonstração iniciada. Alerta em ' + remaining + ' segundos.';
+
+  alertTimer = setInterval(() => {
+    remaining--;
+    status.textContent = 'Alerta de demonstração em ' + remaining + ' segundos.';
+
+    if(remaining <= 0) {
+      cancelAlert();
+      triggerAlert();
     }
+  },1000);
+}
 
-    function calculate() {
-        const type = document.getElementById('inv-type').value;
-        const amount = parseFloat(document.getElementById('inv-amount').value) || 0;
-        const years = parseFloat(document.getElementById('inv-years').value) || 0;
-        let rate = 0.11; // Base CDI approx
+function cancelAlert() {
+  if(alertTimer) {
+    clearInterval(alertTimer);
+    alertTimer = null;
+  }
 
-        if (type === 'prefixado') rate = 0.12;
-        if (type === 'acoes') rate = 0.15;
+  const status = document.getElementById('alertStatus');
+  if(status) status.textContent = 'Demonstração cancelada ou aguardando comando.';
+}
 
-        const total = amount * Math.pow((1 + rate), years);
-        const profit = total - amount;
-        document.getElementById('inv-result').innerText = `Total estimado: R$ ${total.toFixed(2)} (Lucro: R$ ${profit.toFixed(2)})`;
-    }
+function triggerAlert() {
+  document.getElementById('alertScreen').classList.add('show');
+  document.getElementById('alertStatus').textContent = 'Alerta de demonstração exibido.';
 
-    const quizData = {
-        question: "Qual o maior sinal de alerta para um golpe financeiro?",
-        options: [
-            { text: "Exigência de Pix antecipado", correct: true },
-            { text: "Rentabilidade variável", correct: false },
-            { text: "Uso de aplicativo oficial", correct: false }
-        ]
-    };
+  if(document.getElementById('soundEnabled').checked) {
+    playAlertSound();
+  }
+}
 
-    function loadQuiz() {
-        const container = document.getElementById('options-container');
-        document.getElementById('question-text').innerText = quizData.question;
-        container.innerHTML = '';
-        quizData.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'quiz-option';
-            btn.innerText = opt.text;
-            btn.onclick = () => {
-                btn.className = 'quiz-option ' + (opt.correct ? 'correct' : 'wrong');
-            };
-            container.appendChild(btn);
-        });
-    }
+function closeAlert() {
+  document.getElementById('alertScreen').classList.remove('show');
+}
 
-    function checkRisk() {
-        const val = document.getElementById('risk-scenario').value;
-        const fill = document.getElementById('meter-fill');
-        const text = document.getElementById('risk-text');
-        fill.style.width = val + '%';
-        
-        if(val == 0) {
-            text.innerText = "";
-            fill.style.backgroundColor = '#334155';
-        } else if(val < 40) {
-            text.innerText = "Risco Baixo: Hábitos seguros.";
-            fill.style.backgroundColor = '#10b981';
-        } else if(val < 80) {
-            text.innerText = "Risco Médio: Atenção redobrada necessária.";
-            fill.style.backgroundColor = '#f59e0b';
-        } else {
-            text.innerText = "Risco Altíssimo: Perigo iminente de perda financeira.";
-            fill.style.backgroundColor = '#ef4444';
-        }
-    }
+function playAlertSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const context = new AudioContext();
 
-    calculate();
-    loadQuiz();
+    [0,0.35,0.7].forEach(delay => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = 660;
+      gain.gain.setValueAtTime(0.12,context.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001,context.currentTime + delay + 0.18);
+
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(context.currentTime + delay);
+      oscillator.stop(context.currentTime + delay + 0.2);
+    });
+  } catch(error) {
+    console.log('Áudio indisponível neste navegador.');
+  }
+}
 </script>
+
 </body>
 </html>
